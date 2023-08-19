@@ -1,84 +1,43 @@
 package by.manager;
 
 
-
-import by.dao.UserDao;
-import by.dto.UserDTO;
-import by.entity.User;
-
 import by.dao.OrderDao;
+import by.dto.UserDTO;
 import by.entity.Order;
-
-import by.dao.ReviewDao;
-import by.entity.Review;
-
+import by.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Service
-public class UserManager {
-
-    @Autowired
-    private UserDao userDao;
-
-    @Autowired
-    private ReviewDao reviewDao;
-
+public class OrderManager {
 
     @Autowired
     private OrderDao orderDao;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
 
-
-    public void save(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("USER");
-        userDao.save(user);
+    public void save(Order order) {
+        orderDao.save(order);
     }
 
-    public void delete(User user) {
-        userDao.delete(user);
+    public void delete(Order order) {
+        orderDao.delete(order);
     }
 
-    public User getById(int id) {
-        return userDao.getById(id, User.class);
+    public Order getById(int id) {
+        return orderDao.getById(id, Order.class);
     }
 
 
-    public User findByLogin(String login) {
-        return userDao.getByLogin(login);
-    }
 
-    public User findByRole(String role){
-        return userDao.getByRole(role);
-    }
 
-    public User findByEmail(String email) {
-        return userDao.getByEmail(email);
-    }
 
-    public User findByLoginAndPassword(String login, String password) {
-        User user = findByLogin(login);
-
-        if (user != null) {
-            if (passwordEncoder.matches(password, user.getPassword())) {
-                return user;
-            }
-        }
-        return null;
-    }
-
-    public List<User> getUsers() {
-        return userDao.getList();
+    public List<Order> getOrder() {
+        return orderDao.getList();
     }
 
     public User toUser(UserDTO userDTO) {
@@ -97,7 +56,7 @@ public class UserManager {
     }
 
     public void editUser(User user) {
-        userDao.update(user);
+        orderDao.update(user);
     }
 
 //    public List<String> getUsersLog() {

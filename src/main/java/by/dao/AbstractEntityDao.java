@@ -70,6 +70,7 @@ public abstract class AbstractEntityDao {
             session = getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.delete(myEntity);
+            session.close();
         } catch (HibernateException exception) {
             log.error(exception.getMessage());
         } finally {
@@ -86,6 +87,56 @@ public abstract class AbstractEntityDao {
         }
     }
 
+
+    public void delete1(AbstractEntity myEntity) {
+        Session session = null;
+        Transaction transaction = null;
+
+        try {
+            session = getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.delete(myEntity);
+
+        } catch (HibernateException exception) {
+            log.error(exception.getMessage());
+        } finally {
+            try {
+                if (transaction != null) {
+                    transaction.commit();
+                }
+                if (session != null) {
+
+                }
+            } catch (HibernateException exception) {
+                log.error(exception.getMessage());
+            }
+        }
+    }
+
+    public void delete2(AbstractEntity myEntity) {
+        Session session = null;
+        Transaction transaction = null;
+
+        try {
+            session = getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.delete(myEntity);
+
+        } catch (HibernateException exception) {
+            log.error(exception.getMessage());
+        } finally {
+            try {
+                if (transaction != null) {
+                    transaction.commit();
+                }
+                if (session != null) {
+
+                }
+            } catch (HibernateException exception) {
+                log.error(exception.getMessage());
+            }
+        }
+    }
     public <T extends AbstractEntity> T getById(int id, Class<T> entityType) {
         Session session = null;
         T entity = null;

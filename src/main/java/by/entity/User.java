@@ -2,6 +2,7 @@ package by.entity;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,11 +36,14 @@ public class User extends AbstractEntity {
     private String role;
 
     @Column(name = "email", nullable = false)
-    private String email;
+        private String email;
 
-    @OneToMany(mappedBy = "user")
-    private List<Orders> orders;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Order> order = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Review> review = new ArrayList<>();
 
     // added this field to map the reviews
 
@@ -50,18 +54,24 @@ public class User extends AbstractEntity {
         return id;
     }
 
-    public List<Orders> getOrders() {
-        return orders;
+    public List<Order> getOrder() {
+        return order;
     }
-
+    public List<Review> getReview() {
+        return review;
+    }
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setOrders(List<Orders> orders) {
-        this.orders = orders;
+    public void setOrder(List<Order> order) {
+        this.order = order;
     }
     // getters and setters
+
+    public void setReview(List<Review> review) {
+        this.review = review;
+    }
 
     public String getName() {
         return name;
